@@ -1,0 +1,7 @@
+{
+  "name": "MySolarCharge",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
