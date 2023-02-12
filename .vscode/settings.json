@@ -11,5 +11,10 @@
     "idf.port": "/dev/cu.usbserial-0001",
     "idf.pythonBinPath": "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/bin/python",
     "idf.toolsPath": "/Users/laurenlugo/.espressif",
-    "idf.flashType": "UART"
+    "idf.flashType": "UART",
+    "files.associations": {
+        "freertos.h": "c",
+        "adc.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

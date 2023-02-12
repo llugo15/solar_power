@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/Users/laurenlugo/projects/solar_power/build/CMakeFiles/bootloader
+/Users/laurenlugo/projects/solar_power/build/CMakeFiles/bootloader.rule
+/Users/laurenlugo/projects/solar_power/build/CMakeFiles/bootloader-complete.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/Users/laurenlugo/projects/solar_power/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule

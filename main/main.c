@@ -7,13 +7,34 @@
 #include "driver/adc.h"
 #include "sensor.h"
 #include "connect.h"
+#include "nvs_flash.h"
+#include "esp_log.h"
 
 #define DC_PIN 18
 #define SP_PIN 5
 
-void app_main(void)
+static const char* TAG = "wifi_connect";
+
+void wifi_connect(void *parms)
 {
+
+    esp_err_t err = wifi_connect_sta("ATTf5tFbS2", "2t357qsyxsef", 10000);
+    if(err){
+        ESP_LOGE(TAG, "Failed to connect");
+    }
+    for(size_t i = 5; i > 0; i--)
+    {
+        printf("disconnecting in %d\n", i);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+    wifi_disconnect();
+}
+
+void app_main(void)
+{   
+    ESP_ERROR_CHECK(nvs_flash_init());
     wifi_init();
+    xTaskCreate(wifi_connect, "wifi_connect", 1024 * 5, NULL, 5, NULL);
     
     Sensor solar_panel_vol, dc_vol, battery_vol;
     double previous_power = 0.0;
