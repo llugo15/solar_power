@@ -6,12 +6,15 @@
 #include "driver/dac.h"
 #include "driver/adc.h"
 #include "sensor.h"
+#include "connect.h"
 
 #define DC_PIN 18
 #define SP_PIN 5
 
 void app_main(void)
 {
+    wifi_init();
+    
     Sensor solar_panel_vol, dc_vol, battery_vol;
     double previous_power = 0.0;
 
