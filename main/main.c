@@ -9,105 +9,12 @@
 #include "connect.h"
 #include "nvs_flash.h"
 #include "string.h"
-#include "esp_http_client.h"
-#include "esp_log.h"
-#include "cJSON.h"
+#include "send_data.h"
 
 #define DC_PIN 18
 #define SP_PIN 5
 
 static const char* TAG = "wifi_connect";
-
-extern const uint8_t certificate_pem[] asm("_binary_certificate_pem_start");
-
-char *create_file()
-{
-    cJSON *jason_payload = cJSON_CreateObject();
-    cJSON *personalizations = cJSON_CreateArray();
-    cJSON_AddItemToObject(jason_payload, "personalizations", personalizations);
-
-    cJSON *personalization_0 = cJSON_CreateObject();
-    cJSON_AddItemToArray(personalizations, personalization_0);
-
-    cJSON *to = cJSON_CreateArray();
-    cJSON_AddItemToObject(personalization_0, "to", to);
-
-    cJSON *to_0 = cJSON_CreateObject();
-    cJSON_AddStringToObject(to_0, "email", "info@learnesp32.com");
-    cJSON_AddStringToObject(to_0, "name", "Mair");
-    cJSON_AddItemToArray(to, to_0);
-
-    cJSON_AddStringToObject(personalization_0, "subject", "Hello, World!");
-
-    cJSON *content = cJSON_CreateArray();
-    cJSON_AddItemToObject(jason_payload, "content", content);
-
-    cJSON *content_0 = cJSON_CreateObject();
-    cJSON_AddStringToObject(content_0, "type", "text/html");
-    cJSON_AddStringToObject(content_0, "value", "<h1>Heya!</h1>");
-    cJSON_AddItemToArray(content, content_0);
-
-    cJSON *from = cJSON_CreateObject();
-    cJSON_AddItemToObject(jason_payload, "from", from);
-    cJSON_AddStringToObject(from, "email", "info@learnesp32.com");
-    cJSON_AddStringToObject(from, "name", "Mair");
-
-    cJSON *reply_to = cJSON_CreateObject();
-    cJSON_AddItemToObject(jason_payload, "reply_to", reply_to);
-    cJSON_AddStringToObject(reply_to, "email", "info@learnesp32.com");
-    cJSON_AddStringToObject(reply_to, "name", "Mair");
-
-    char *payload_body = cJSON_Print(jason_payload);
-    printf("body: %s\n", payload_body);
-    cJSON_Delete(jason_payload);
-    return payload_body;
-}
-
-esp_err_t client_event_get_handler(esp_http_client_event_handle_t evt)
-{
-    switch(evt -> event_id)
-    {
-        case HTTP_EVENT_ON_DATA: 
-            printf("HTTP_EVENT_ON_DATA: %.*s\n", evt -> data_len, (char *)evt->data);
-            break;
-
-        default:
-        break;
-    }
-    return ESP_OK;
-    
-}
-
-void post_function()
-{
-    esp_http_client_config_t config_post = {
-        .url = "https://test-1ecd1-default-rtdb.firebaseio.com/preferences.json",
-        .method = HTTP_METHOD_POST,
-        .cert_pem = (const char *)certificate_pem,
-        .event_handler = client_event_get_handler};
-
-    esp_http_client_event_handle_t client = esp_http_client_init(&config_post);
-    esp_http_client_set_header(client, "Content-Type", "application/json");
-    //esp_http_client_set_header(client, "Authorization", "AIzaSyDWNPZ93LIPdr12eY5ZbfoDWgYSEdfVL08");
-
-    char *post_data = create_file(); // FIXME (what is being sent has to be jsons) 
-    esp_http_client_set_post_field(client, post_data, strlen(&config_post));
-
-    esp_err_t err = esp_http_client_perform(client);
-    if (err == ESP_OK)
-    {
-        ESP_LOGI(TAG, "HTTP GET status = %d\n", esp_http_client_get_status_code(client));
-    }
-    else
-    {
-        ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
-    }
-    if (post_data != NULL)
-    {
-        free(post_data);
-    }
-    esp_http_client_cleanup(client);
-}
 
 void app_main(void)
 {   
