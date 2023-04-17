@@ -17,15 +17,18 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
 {
     switch (event_id)
     {
-    case SYSTEM_EVENT_STA_START:
+    // case SYSTEM_EVENT_STA_START:
+    case WIFI_EVENT_STA_START:
         ESP_LOGI(TAG, "connecting...");
         esp_wifi_connect();
         break;
-    case SYSTEM_EVENT_STA_CONNECTED:
+    // case SYSTEM_EVENT_STA_CONNECTED:
+    case WIFI_EVENT_STA_CONNECTED:
         ESP_LOGI(TAG, "connected");
         break;
 
-    case SYSTEM_EVENT_STA_DISCONNECTED:
+    // case SYSTEM_EVENT_STA_DISCONNECTED:
+    case WIFI_EVENT_STA_DISCONNECTED:
         ESP_LOGI(TAG, "disconnected");
         xEventGroupSetBits(Wifi_events, DISCONNECTED);
         break;
@@ -71,10 +74,6 @@ esp_err_t wifi_connect_sta(const char* ssid, const char* pass, int timeout)
     if (result == CONNECTED_GOT_IP)
         return ESP_OK;
     return ESP_FAIL;
-}
-
-void wifi_connect_ap(const char *ssid, const char *pass){
-
 }
 
 void wifi_disconnect(void){

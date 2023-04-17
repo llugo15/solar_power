@@ -1,5 +1,5 @@
 [debug] [2023-02-18T22:51:34.835Z] ----------------------------------------------------------------------
-[debug] [2023-02-18T22:51:34.839Z] Command:       /usr/local/bin/node /Users/laurenlugo/.npm-global/bin/firebase login
+[debug] [2023-02-18T22:51:34.839Z] Command:       /usr/local/bin/node /Users/gil18/.npm-global/bin/firebase login
 [debug] [2023-02-18T22:51:34.839Z] CLI Version:   11.23.1
 [debug] [2023-02-18T22:51:34.839Z] Platform:      darwin
 [debug] [2023-02-18T22:51:34.840Z] Node Version:  v18.14.1

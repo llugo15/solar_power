@@ -21,15 +21,11 @@ esp_err_t on_client_data(esp_http_client_event_t *evt)
     {
     case HTTP_EVENT_ON_DATA:
     {
-        // ESP_LOGI(TAG, "Length=%d", evt->data_len);
-        // printf("%.*s\n", evt->data_len, (char *)evt->data);
         chunk_payload_t *chunk_payload = evt->user_data;
         chunk_payload->buffer = realloc(chunk_payload->buffer, chunk_payload->buffer_index + evt->data_len + 1);
         memcpy(&chunk_payload->buffer[chunk_payload->buffer_index], (uint8_t *)evt->data, evt->data_len);
         chunk_payload->buffer_index = chunk_payload->buffer_index + evt->data_len;
         chunk_payload->buffer[chunk_payload->buffer_index] = 0;
-
-        //printf("buffer******** %s\n",chunk_payload->buffer);
     }
     break;
 
@@ -39,42 +35,20 @@ esp_err_t on_client_data(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
-char *create_firebase_body()
-{
-    cJSON *jason_payload = cJSON_CreateObject();
-    cJSON *personalizations = cJSON_CreateArray();
-    cJSON_AddItemToObject(jason_payload, "personalizations", personalizations);
+char *solarPanelData () { // make sure to put in the float values of voltageData and currentData
+    float voltageData = 23.234;
+    float currentData = 2.123;
 
-    cJSON *personalization_0 = cJSON_CreateObject();
-    cJSON_AddItemToArray(personalizations, personalization_0);
+    char voltageString[10];
+    char currentString[10];
 
-    cJSON *to = cJSON_CreateArray();
-    cJSON_AddItemToObject(personalization_0, "to", to);
-
-    cJSON *to_0 = cJSON_CreateObject();
-    cJSON_AddStringToObject(to_0, "email", "llugo@tamu.edu");
-    cJSON_AddStringToObject(to_0, "name", "Lauren");
-    cJSON_AddItemToArray(to, to_0);
-
-    cJSON_AddStringToObject(personalization_0, "subject", "Hello, World!");
-
-    cJSON *content = cJSON_CreateArray();
-    cJSON_AddItemToObject(jason_payload, "content", content);
-
-    cJSON *content_0 = cJSON_CreateObject();
-    cJSON_AddStringToObject(content_0, "type", "text/html");
-    cJSON_AddStringToObject(content_0, "value", "<h1>Heya!</h1>");
-    cJSON_AddItemToArray(content, content_0);
-
-    cJSON *from = cJSON_CreateObject();
-    cJSON_AddItemToObject(jason_payload, "from", from);
-    cJSON_AddStringToObject(from, "email", "llugo@tamu.edu");
-    cJSON_AddStringToObject(from, "name", "Lauren");
-
-    cJSON *reply_to = cJSON_CreateObject();
-    cJSON_AddItemToObject(jason_payload, "reply_to", reply_to);
-    cJSON_AddStringToObject(reply_to, "email", "llugo@tamu.edu");
-    cJSON_AddStringToObject(reply_to, "name", "Lauren");
+    sprintf(voltageString, "%f", voltageData);
+    sprintf(currentString, "%f", currentData);
+    
+    // making JSON object, reandom id (parent), voltage (child node), current (child node)
+    cJSON *jason_payload = cJSON_CreateObject(); 
+    cJSON_AddStringToObject(jason_payload, "voltage", voltageString);
+    cJSON_AddStringToObject(jason_payload, "current", currentString);
 
     char *payload_body = cJSON_Print(jason_payload);
     printf("body: %s\n", payload_body);
@@ -82,31 +56,67 @@ char *create_firebase_body()
     return payload_body;
 }
 
-void post_function()
-{
+void post_function() {
+    /* eventually going to be passing data through here, additionally need to remember to keep passing data every minute or so */
     chunk_payload_t chunk_payload = {0};
 
-    esp_http_client_config_t esp_http_client_config = {
-        .url = "https://test-1ecd1-default-rtdb.firebaseio.com/preferences.json",
-        .method = HTTP_METHOD_POST,
+    esp_http_client_config_t config = {
+        .url = "https://test-1ecd1-default-rtdb.firebaseio.com",
         .event_handler = on_client_data,
         .user_data = &chunk_payload,
+        .disable_auto_redirect = true,
         .cert_pem = (char *)cert};
-    esp_http_client_handle_t client = esp_http_client_init(&esp_http_client_config);
-    esp_http_client_set_header(client, "Content-Type", "application/json");
-    //esp_http_client_set_header(client, "Authorization", "Bearer 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");
-    char *payload_body = create_firebase_body();
-    esp_http_client_set_post_field(client, payload_body, strlen(payload_body));
+    esp_http_client_handle_t client = esp_http_client_init(&config);
 
+    // POST
+    char *payload_body = solarPanelData();
+    esp_http_client_set_url(client, "https://test-1ecd1-default-rtdb.firebaseio.com/newuser@gmail/solarpanel.json");
+    esp_http_client_set_method(client, HTTP_METHOD_POST);
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+    esp_http_client_set_post_field(client, payload_body, strlen(payload_body));
     esp_err_t err = esp_http_client_perform(client);
-    if (err == ESP_OK)
-    {
-        ESP_LOGI(TAG, "HTTP GET status = %d\n", esp_http_client_get_status_code(client));
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "HTTP POST Status = %d, content_length = %"PRIu64,
+                esp_http_client_get_status_code(client),
+                esp_http_client_get_content_length(client));
+    } else {
+        ESP_LOGE(TAG, "HTTP POST request failed: %s", esp_err_to_name(err));
     }
-    else
-    {
-        ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
+
+
+    // dynamically writing batery voltage into a JSON object for backend 
+    int batteryTest = .55 * 100;
+    char str[4]; // creating a empty string for the battery voltage 
+    
+    // converting voltage from int to *char and initializing the body and end to create JSON object
+    sprintf(str, "%d", batteryTest);
+    char *body = "{\"Battery\":";
+    char *end = "}";
+
+    // creating a holder *char and concatenating the JSON object
+    char* name_with_extension;
+    name_with_extension = malloc(strlen(body) + strlen(end) + strlen(str) + 1); /* make space for the new string (should check the return value ...) */
+    strcpy(name_with_extension, body); /* copy name into the new var */
+    strcat(name_with_extension, str); /* add the extension */
+    strcat(name_with_extension, end); /* add the extension */
+
+    printf("Output: %s\n", name_with_extension);
+
+    // PATCH
+    esp_http_client_set_url(client, "https://test-1ecd1-default-rtdb.firebaseio.com/newuser@gmail.json");
+    esp_http_client_set_method(client, HTTP_METHOD_PATCH);
+    esp_http_client_set_post_field(client, name_with_extension, strlen(name_with_extension));
+    err = esp_http_client_perform(client);
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "HTTP PATCH Status = %d, content_length = %"PRIu64,
+                esp_http_client_get_status_code(client),
+                esp_http_client_get_content_length(client));
+    } else {
+        ESP_LOGE(TAG, "HTTP PATCH request failed: %s", esp_err_to_name(err));
     }
+
+    // this has to happen at the end to free up the data
+    free(name_with_extension);
     if (chunk_payload.buffer != NULL)
     {
         free(chunk_payload.buffer);
