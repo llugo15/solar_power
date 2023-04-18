@@ -10,7 +10,7 @@
     "target":             "esp32",
     "phy_data_partition": "",
     "monitor_baud" :      "115200",
-    "monitor_toolprefix": "xtensa-esp32-elf-",
+    "monitor_toolprefix": "riscv32-esp-elf-",
     "config_environment" : {
         "COMPONENT_KCONFIGS" : "/Users/laurenlugo/esp/esp-idf/components/efuse/Kconfig;/Users/laurenlugo/esp/esp-idf/components/esp32/Kconfig;/Users/laurenlugo/esp/esp-idf/components/esp_common/Kconfig;/Users/laurenlugo/esp/esp-idf/components/esp_system/Kconfig;/Users/laurenlugo/esp/esp-idf/components/log/Kconfig;/Users/laurenlugo/esp/esp-idf/components/newlib/Kconfig;/Users/laurenlugo/esp/esp-idf/components/spi_flash/Kconfig",
         "COMPONENT_KCONFIGS_PROJBUILD" : "/Users/laurenlugo/esp/esp-idf/components/bootloader/Kconfig.projbuild;/Users/laurenlugo/esp/esp-idf/components/esptool_py/Kconfig.projbuild;/Users/laurenlugo/esp/esp-idf/components/partition_table/Kconfig.projbuild"

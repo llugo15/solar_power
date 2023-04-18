@@ -8,7 +8,7 @@
         "interface/ftdi/esp32_devkitj_v1.cfg",
         "target/esp32.cfg"
     ],
-    "idf.port": "/dev/cu.usbserial-0001",
+    "idf.port": "/dev/cu.SLAB_USBtoUART",
     "idf.pythonBinPath": "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/bin/python",
     "idf.toolsPath": "/Users/laurenlugo/.espressif",
     "idf.flashType": "UART",

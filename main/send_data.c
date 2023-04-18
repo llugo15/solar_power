@@ -42,21 +42,21 @@ esp_err_t on_client_data(esp_http_client_event_t *evt)
 char *create_firebase_body()
 {
     cJSON *jason_payload = cJSON_CreateObject();
-    cJSON *personalizations = cJSON_CreateArray();
-    cJSON_AddItemToObject(jason_payload, "personalizations", personalizations);
+    cJSON *voltage = cJSON_CreateArray();
+    cJSON_AddItemToObject(jason_payload, "voltage", voltage);
 
-    cJSON *personalization_0 = cJSON_CreateObject();
-    cJSON_AddItemToArray(personalizations, personalization_0);
+    cJSON *voltage_0 = cJSON_CreateObject();
+    cJSON_AddItemToArray(voltage, voltage_0);
 
     cJSON *to = cJSON_CreateArray();
-    cJSON_AddItemToObject(personalization_0, "to", to);
+    cJSON_AddItemToObject(voltage_0, "to", to);
 
     cJSON *to_0 = cJSON_CreateObject();
     cJSON_AddStringToObject(to_0, "email", "llugo@tamu.edu");
     cJSON_AddStringToObject(to_0, "name", "Lauren");
     cJSON_AddItemToArray(to, to_0);
 
-    cJSON_AddStringToObject(personalization_0, "subject", "Hello, World!");
+    cJSON_AddStringToObject(voltage_0, "subject", "Hello, World!");
 
     cJSON *content = cJSON_CreateArray();
     cJSON_AddItemToObject(jason_payload, "content", content);

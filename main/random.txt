@@ -1,0 +1,32 @@
+[1/3] Performing build step for 'bootloader'
+ninja: no work to do.
+
+ *  Executing task: /Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/bin/python /Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py -p /dev/cu.usbserial-0001 -b 460800 --before default_reset --after hard_reset --chip esp32 write_flash --flash_mode dio --flash_freq 40m --flash_size detect 0x8000 partition_table/partition-table.bin 0x1000 bootloader/bootloader.bin 0x10000 solar_power.bin 
+
+esptool.py v3.1-dev
+Serial port /dev/cu.usbserial-0001
+Traceback (most recent call last):
+  File "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/lib/python3.10/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/cu.usbserial-0001'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py", line 4423, in <module>
+    _main()
+  File "/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py", line 4416, in _main
+    main()
+  File "/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py", line 3964, in main
+    esp = esp or get_default_connected_device(ser_list, port=args.port, connect_attempts=args.connect_attempts,
+  File "/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py", line 119, in get_default_connected_device
+    _esp = chip_class(each_port, initial_baud, trace)
+  File "/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py", line 305, in __init__
+    self._port = serial.serial_for_url(port)
+  File "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/lib/python3.10/site-packages/serial/__init__.py", line 90, in serial_for_url
+    instance.open()
+  File "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/lib/python3.10/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/cu.usbserial-0001: [Errno 2] No such file or directory: '/dev/cu.usbserial-0001'
+
+ *  The terminal process "/Users/laurenlugo/.espressif/python_env/idf4.3_py3.10_env/bin/python '/Users/laurenlugo/esp/esp-idf/components/esptool_py/esptool/esptool.py', '-p', '/dev/cu.usbserial-0001', '-b', '460800', '--before', 'default_reset', '--after', 'hard_reset', '--chip', 'esp32', 'write_flash', '--flash_mode', 'dio', '--flash_freq', '40m', '--flash_size', 'detect', '0x8000', 'partition_table/partition-table.bin', '0x1000', 'bootloader/bootloader.bin', '0x10000', 'solar_power.bin'" terminated with exit code: 1. 
