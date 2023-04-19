@@ -35,15 +35,13 @@ esp_err_t on_client_data(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
-char *solarPanelData () { // make sure to put in the float values of voltageData and currentData
-    float voltageData = 23.234;
-    float currentData = 2.123;
-
+char *solarPanelData (int sp_vol, int sp_curr) { // make sure to put in the float values of voltageData and currentData
+ 
     char voltageString[10];
     char currentString[10];
 
-    sprintf(voltageString, "%f", voltageData);
-    sprintf(currentString, "%f", currentData);
+    sprintf(voltageString, "%d", sp_vol);
+    sprintf(currentString, "%d", sp_curr);
     
     // making JSON object, reandom id (parent), voltage (child node), current (child node)
     cJSON *jason_payload = cJSON_CreateObject(); 
@@ -56,7 +54,10 @@ char *solarPanelData () { // make sure to put in the float values of voltageData
     return payload_body;
 }
 
-void post_function() {
+// bool connectESP(string MAC) {
+// }
+
+void post_function(int sp_vol, int sp_curr, int bat_vol) {
     /* eventually going to be passing data through here, additionally need to remember to keep passing data every minute or so */
     chunk_payload_t chunk_payload = {0};
 
@@ -69,7 +70,7 @@ void post_function() {
     esp_http_client_handle_t client = esp_http_client_init(&config);
 
     // POST
-    char *payload_body = solarPanelData();
+    char *payload_body = solarPanelData(sp_vol, sp_curr);
     esp_http_client_set_url(client, "https://test-1ecd1-default-rtdb.firebaseio.com/newuser@gmail/solarpanel.json");
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
@@ -85,11 +86,10 @@ void post_function() {
 
 
     // dynamically writing batery voltage into a JSON object for backend 
-    int batteryTest = .55 * 100;
     char str[4]; // creating a empty string for the battery voltage 
     
     // converting voltage from int to *char and initializing the body and end to create JSON object
-    sprintf(str, "%d", batteryTest);
+    sprintf(str, "%d", bat_vol);
     char *body = "{\"Battery\":";
     char *end = "}";
 

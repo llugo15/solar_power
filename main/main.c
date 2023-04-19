@@ -27,11 +27,16 @@ void app_main(void)
     printf("WIFI was initiated............\n\n");
     
     // call swtich control function and make sure to call post function within switch control
-
-    post_function();
-    wifi_disconnect();
+    // while (true) {
+    //     vTaskDelay(2000/ portTICK_PERIOD_MS);
+    //     switch_control(DC_PIN, SP_PIN);
+    // }
 
     switch_control(DC_PIN, SP_PIN);
+
+    // post_function();
+    wifi_disconnect();
+
 }
 
 

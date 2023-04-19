@@ -63,9 +63,7 @@ esp_err_t wifi_connect_sta(const char* ssid, const char* pass, int timeout)
     wifi_config_t wifi_config;
     memset(&wifi_config, 0 , sizeof(wifi_config_t));
     strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid) -1);
-    
-    /*strncpy((char *)wifi_config.sta.password, pass, sizeof(wifi_config.sta.password) -1);*/
-    
+        
     esp_wifi_set_mode(WIFI_MODE_STA);
     esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config);
     esp_wifi_start();

@@ -1627,7 +1627,7 @@
 				{
 					"directoryIndex" : 12,
 					"id" : "__idf_esp_app_format::@08c2bdce7fd85cdbea06",
-					"jsonFile" : "target-__idf_esp_app_format-0e374304c1a11f51961c.json",
+					"jsonFile" : "target-__idf_esp_app_format-fbea0cb39364ccdff565.json",
 					"name" : "__idf_esp_app_format",
 					"projectIndex" : 1
 				},
@@ -1781,7 +1781,7 @@
 				{
 					"directoryIndex" : 70,
 					"id" : "__idf_fatfs::@75ac1d9b25dacc8cc9e7",
-					"jsonFile" : "target-__idf_fatfs-f0675e5ac6a04d79841a.json",
+					"jsonFile" : "target-__idf_fatfs-d767b949b1fd4528f053.json",
 					"name" : "__idf_fatfs",
 					"projectIndex" : 1
 				},
@@ -1837,7 +1837,7 @@
 				{
 					"directoryIndex" : 81,
 					"id" : "__idf_main::@7368607ed66887415643",
-					"jsonFile" : "target-__idf_main-ee59e6e3f8e543d3fa7c.json",
+					"jsonFile" : "target-__idf_main-3ac0bb0987ef30a99aa5.json",
 					"name" : "__idf_main",
 					"projectIndex" : 1
 				},
@@ -1984,7 +1984,7 @@
 				{
 					"directoryIndex" : 21,
 					"id" : "__ldgen_output_sections.ld::@874df54e61e20112dfd4",
-					"jsonFile" : "target-__ldgen_output_sections.ld-d84642ce8fc353b2a9c5.json",
+					"jsonFile" : "target-__ldgen_output_sections.ld-de69a2b5a72c0ea8e877.json",
 					"name" : "__ldgen_output_sections.ld",
 					"projectIndex" : 1
 				},
@@ -2124,7 +2124,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "flash::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-flash-9e3c7fc79ab285593f0b.json",
+					"jsonFile" : "target-flash-2ab8e08647f4bae8a5a1.json",
 					"name" : "flash",
 					"projectIndex" : 0
 				},
@@ -2264,14 +2264,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "solar_power.elf::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-solar_power.elf-acd66353a95bfb603d50.json",
+					"jsonFile" : "target-solar_power.elf-6e89b16cf52a95241bce.json",
 					"name" : "solar_power.elf",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "uf2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-uf2-b442ad685b9fe85e80d9.json",
+					"jsonFile" : "target-uf2-54ec5921a1b9d22cfb01.json",
 					"name" : "uf2",
 					"projectIndex" : 0
 				},
