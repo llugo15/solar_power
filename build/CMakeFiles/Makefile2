@@ -1771,8 +1771,8 @@ CMakeFiles/monitor.dir/clean:
 # Target rules for target CMakeFiles/flash.dir
 
 # All Build rule for target.
-CMakeFiles/flash.dir/all: CMakeFiles/app.dir/all
 CMakeFiles/flash.dir/all: CMakeFiles/bootloader.dir/all
+CMakeFiles/flash.dir/all: CMakeFiles/app.dir/all
 CMakeFiles/flash.dir/all: esp-idf/partition_table/CMakeFiles/partition_table_bin.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\flash.dir\build.make CMakeFiles/flash.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\flash.dir\build.make CMakeFiles/flash.dir/build
@@ -1864,15 +1864,15 @@ CMakeFiles/solar_power.elf.dir/all: esp-idf/protocomm/CMakeFiles/__idf_protocomm
 CMakeFiles/solar_power.elf.dir/all: esp-idf/protobuf-c/CMakeFiles/__idf_protobuf-c.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/espcoredump/CMakeFiles/__idf_espcoredump.dir/all
-CMakeFiles/solar_power.elf.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/wear_levelling/CMakeFiles/__idf_wear_levelling.dir/all
+CMakeFiles/solar_power.elf.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/json/CMakeFiles/__idf_json.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/perfmon/CMakeFiles/__idf_perfmon.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/all
-CMakeFiles/solar_power.elf.dir/all: esp-idf/wifi_provisioning/CMakeFiles/__idf_wifi_provisioning.dir/all
 CMakeFiles/solar_power.elf.dir/all: esp-idf/main/CMakeFiles/__idf_main.dir/all
+CMakeFiles/solar_power.elf.dir/all: esp-idf/wifi_provisioning/CMakeFiles/__idf_wifi_provisioning.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\solar_power.elf.dir\build.make CMakeFiles/solar_power.elf.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\solar_power.elf.dir\build.make CMakeFiles/solar_power.elf.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gil18\Downloads\ECEN404\build\CMakeFiles --progress-num=100 "Built target solar_power.elf"
@@ -2002,8 +2002,8 @@ CMakeFiles/uf2-app.dir/clean:
 # Target rules for target CMakeFiles/uf2.dir
 
 # All Build rule for target.
-CMakeFiles/uf2.dir/all: CMakeFiles/gen_project_binary.dir/all
 CMakeFiles/uf2.dir/all: CMakeFiles/bootloader.dir/all
+CMakeFiles/uf2.dir/all: CMakeFiles/gen_project_binary.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uf2.dir\build.make CMakeFiles/uf2.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\uf2.dir\build.make CMakeFiles/uf2.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gil18\Downloads\ECEN404\build\CMakeFiles --progress-num= "Built target uf2"
@@ -3003,15 +3003,15 @@ esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/protoc
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/protobuf-c/CMakeFiles/__idf_protobuf-c.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/espcoredump/CMakeFiles/__idf_espcoredump.dir/all
-esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/wear_levelling/CMakeFiles/__idf_wear_levelling.dir/all
+esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/json/CMakeFiles/__idf_json.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/perfmon/CMakeFiles/__idf_perfmon.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/all
-esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/wifi_provisioning/CMakeFiles/__idf_wifi_provisioning.dir/all
 esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/main/CMakeFiles/__idf_main.dir/all
+esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/all: esp-idf/wifi_provisioning/CMakeFiles/__idf_wifi_provisioning.dir/all
 	$(MAKE) $(MAKESILENT) -f esp-idf\esp_system\CMakeFiles\__ldgen_output_sections.ld.dir\build.make esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/depend
 	$(MAKE) $(MAKESILENT) -f esp-idf\esp_system\CMakeFiles\__ldgen_output_sections.ld.dir\build.make esp-idf/esp_system/CMakeFiles/__ldgen_output_sections.ld.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gil18\Downloads\ECEN404\build\CMakeFiles --progress-num= "Built target __ldgen_output_sections.ld"
@@ -4110,8 +4110,8 @@ esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/clean:
 
 # All Build rule for target.
 esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all: esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/all
-esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all: esp-idf/wear_levelling/CMakeFiles/__idf_wear_levelling.dir/all
+esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 	$(MAKE) $(MAKESILENT) -f esp-idf\fatfs\CMakeFiles\__idf_fatfs.dir\build.make esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/depend
 	$(MAKE) $(MAKESILENT) -f esp-idf\fatfs\CMakeFiles\__idf_fatfs.dir\build.make esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gil18\Downloads\ECEN404\build\CMakeFiles --progress-num=35 "Built target __idf_fatfs"
@@ -4309,8 +4309,8 @@ esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/protocomm/CMakeFiles/__idf_p
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/protobuf-c/CMakeFiles/__idf_protobuf-c.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/espcoredump/CMakeFiles/__idf_espcoredump.dir/all
-esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/wear_levelling/CMakeFiles/__idf_wear_levelling.dir/all
+esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/json/CMakeFiles/__idf_json.dir/all
 esp-idf/main/CMakeFiles/__idf_main.dir/all: esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir/all

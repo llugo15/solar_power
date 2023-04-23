@@ -16,7 +16,7 @@ void Sensor_ctor(Sensor * const me, double max_voltage, adc1_channel_t sensor_gp
 
 int sensor_adc1(Sensor* const me)
 {
-    adc1_config_width(ADC_WIDTH_MAX_12Bit);
+    adc1_config_width(ADC_WIDTH_MAX);
     adc1_config_channel_atten(me->sensor_gpio, ADC_ATTEN_DB_11);
     while(true){
         int val= adc1_get_raw(me->sensor_gpio);
@@ -31,7 +31,7 @@ int sensor_adc2(Sensor* const me)
     adc2_config_channel_atten(me->sensor_gpio, ADC_ATTEN_DB_11);
     while(true){
         int val;
-        adc2_get_raw(me->sensor_gpio,ADC_WIDTH_MAX_12Bit, &val);
+        adc2_get_raw(me->sensor_gpio,ADC_WIDTH_MAX, &val);
         val = (val*(me->max_voltage))/4096;
         vTaskDelay(5000/portTICK_PERIOD_MS);
         return val;
@@ -58,10 +58,8 @@ void switch_control(gpio_num_t dc_pin, gpio_num_t solar_power_pin) {
 
     //Configuring the gpio pin outputs which control the switches.
     //The default setting is high, to close the switches. Allowing prower through
-    // esp_rom_gpio_pad_select_gpio(dc_pin);
-    // esp_rom_gpio_pad_select_gpio(solar_power_pin);
-    gpio_pad_select_gpio(dc_pin);
-    gpio_pad_select_gpio(solar_power_pin);
+    esp_rom_gpio_pad_select_gpio(dc_pin);
+    esp_rom_gpio_pad_select_gpio(solar_power_pin);
     gpio_set_direction(dc_pin, GPIO_MODE_OUTPUT);
     gpio_set_direction(solar_power_pin, GPIO_MODE_OUTPUT);
     gpio_set_level(dc_pin, 1);
@@ -77,17 +75,17 @@ void switch_control(gpio_num_t dc_pin, gpio_num_t solar_power_pin) {
     Sensor_ctor(&dc_curr, 2.6, ADC2_CHANNEL_6);
     Sensor_ctor(&battery_curr, 2.6, ADC2_CHANNEL_7);
 
-    post_function(10, 2, 40);
+    post_function(10, 2, 40, 2);
 
     while(true){
 
-        int sp_vol_num = sensor_adc1(&solar_panel_vol);
-        int dc_vol_num = sensor_adc1(&dc_vol);
-        int battery_vol_num = sensor_adc2(&battery_vol);
+        double sp_vol_num = sensor_adc1(&solar_panel_vol);
+        double dc_vol_num = sensor_adc1(&dc_vol);
+        double battery_vol_num = sensor_adc2(&battery_vol);
 
-        int sp_curr_num = sensor_adc2(&solar_panel_curr);
-        int dc_curr_num = sensor_adc2(&dc_curr);
-        int battery_curr_num = sensor_adc2(&battery_curr);
+        double sp_curr_num = sensor_adc2(&solar_panel_curr);
+        double dc_curr_num = sensor_adc2(&dc_curr);
+        double battery_curr_num = sensor_adc2(&battery_curr);
     
         //if battery is greater than 12.6V
         if(battery_vol_num >= 12.6){

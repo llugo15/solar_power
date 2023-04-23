@@ -35,18 +35,24 @@ esp_err_t on_client_data(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
-char *solarPanelData (int sp_vol, int sp_curr) { // make sure to put in the float values of voltageData and currentData
+char *solarPanelData (double sp_vol, double sp_curr, double bat_vol, double bat_curr) { // make sure to put in the float values of voltageData and currentData
  
-    char voltageString[10];
-    char currentString[10];
+    char solarVoltage[10];
+    char solarCurrent[10];
+    char batteryVoltage[10];
+    char batteryCurrent[10];
 
-    sprintf(voltageString, "%d", sp_vol);
-    sprintf(currentString, "%d", sp_curr);
+    sprintf(solarVoltage, "%f", sp_vol);
+    sprintf(solarCurrent, "%f", sp_curr);
+    sprintf(batteryVoltage, "%f", bat_vol);
+    sprintf(batteryCurrent, "%f", bat_curr);
     
     // making JSON object, reandom id (parent), voltage (child node), current (child node)
     cJSON *jason_payload = cJSON_CreateObject(); 
-    cJSON_AddStringToObject(jason_payload, "voltage", voltageString);
-    cJSON_AddStringToObject(jason_payload, "current", currentString);
+    cJSON_AddStringToObject(jason_payload, "voltage", solarVoltage);
+    cJSON_AddStringToObject(jason_payload, "current", solarCurrent);
+    cJSON_AddStringToObject(jason_payload, "batteryVoltage", batteryVoltage);
+    cJSON_AddStringToObject(jason_payload, "batteryCurrent", batteryCurrent);
 
     char *payload_body = cJSON_Print(jason_payload);
     printf("body: %s\n", payload_body);
@@ -54,10 +60,36 @@ char *solarPanelData (int sp_vol, int sp_curr) { // make sure to put in the floa
     return payload_body;
 }
 
-// bool connectESP(string MAC) {
-// }
+esp_err_t client_event_get_handler(esp_http_client_event_handle_t evt) {
 
-void post_function(int sp_vol, int sp_curr, int bat_vol) {
+    switch(evt->event_id) {
+        case HTTP_EVENT_ON_DATA:
+            printf("HTTP_EVENT_ON_DATA: %d %s\n", evt->data_len, (char *)evt->data);
+            break;
+        default:
+            break;
+    }
+
+    return ESP_OK;
+
+}
+
+static void get() {
+
+    esp_http_client_config_t config = {
+        .url = "https://test-1ecd1-default-rtdb.firebaseio.com/currentUser",
+        .method = HTTP_METHOD_GET,
+        .cert_pem = NULL,
+        .event_handler = client_event_get_handler,
+    };
+
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+    esp_http_client_perform(client);
+    esp_http_client_cleanup(client);
+
+}
+
+void post_function(double sp_vol, double sp_curr, double bat_vol, double bat_curr) {
     /* eventually going to be passing data through here, additionally need to remember to keep passing data every minute or so */
     chunk_payload_t chunk_payload = {0};
 
@@ -69,8 +101,11 @@ void post_function(int sp_vol, int sp_curr, int bat_vol) {
         .cert_pem = (char *)cert};
     esp_http_client_handle_t client = esp_http_client_init(&config);
 
+    // GET
+    // get();
+
     // POST
-    char *payload_body = solarPanelData(sp_vol, sp_curr);
+    char *payload_body = solarPanelData(sp_vol, sp_curr, bat_vol, bat_curr);
     esp_http_client_set_url(client, "https://test-1ecd1-default-rtdb.firebaseio.com/newuser@gmail/solarpanel.json");
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
@@ -86,10 +121,10 @@ void post_function(int sp_vol, int sp_curr, int bat_vol) {
 
 
     // dynamically writing batery voltage into a JSON object for backend 
-    char str[4]; // creating a empty string for the battery voltage 
+    char str[400]; // creating a empty string for the battery voltage 
     
     // converting voltage from int to *char and initializing the body and end to create JSON object
-    sprintf(str, "%d", bat_vol);
+    sprintf(str, "%f", bat_vol);
     char *body = "{\"Battery\":";
     char *end = "}";
 
@@ -102,7 +137,7 @@ void post_function(int sp_vol, int sp_curr, int bat_vol) {
 
     printf("Output: %s\n", name_with_extension);
 
-    // PATCH
+    PATCH
     esp_http_client_set_url(client, "https://test-1ecd1-default-rtdb.firebaseio.com/newuser@gmail.json");
     esp_http_client_set_method(client, HTTP_METHOD_PATCH);
     esp_http_client_set_post_field(client, name_with_extension, strlen(name_with_extension));
