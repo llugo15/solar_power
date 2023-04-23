@@ -5,7 +5,7 @@
 #include "esp_http_client.h"
 
 esp_err_t on_client_data(esp_http_client_event_t *evt);
-char *create_firebase_body();
+char *solarPanelData();
 void post_function();
 
 #endif
