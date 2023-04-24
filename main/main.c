@@ -23,10 +23,7 @@ void app_main(void)
 
     vTaskDelay(2000/ portTICK_PERIOD_MS);
     printf("WIFI was initiated............\n\n");
-    post_function(12.0,4.0,5.0);
-    //main_switch_control();
-    
-    wifi_disconnect();
+    main_switch_control();
 }
 
 

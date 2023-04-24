@@ -11,6 +11,7 @@
 
 #define DC_PIN 18
 #define SP_PIN 19
+#define three_out 16
 
 void Switch_ctor(Switch_control * const me)
 {
@@ -34,21 +35,29 @@ void switch_control(Switch_control * const me, gpio_num_t dc_pin, gpio_num_t sol
     Sensor solar_panel_vol, dc_vol, battery_vol;
     Sensor solar_panel_curr, dc_curr, battery_curr;
     double previous_power = 0.0;
+    double previous_curent = 0.0;
+    double dac_voltage = 1.2;
+    double max_current = 0.0;
+    double max_voltage = 60.0;
     int count = 0;
 
     //Configuring the gpio pin outputs which control the switches.
     //The default setting is high, to close the switches. Allowing prower through
+
     gpio_pad_select_gpio(dc_pin);
     gpio_pad_select_gpio(solar_power_pin);
+    gpio_pad_select_gpio(three_out);
     gpio_set_direction(dc_pin, GPIO_MODE_OUTPUT);
     gpio_set_direction(solar_power_pin, GPIO_MODE_OUTPUT);
+    gpio_set_direction(three_out, GPIO_MODE_OUTPUT);
     gpio_set_level(dc_pin, 1);
     gpio_set_level(solar_power_pin, 1);
+    gpio_set_level(three_out, 1);
 
     //Voltage Sensors/Dividers input
     Sensor_ctor(&solar_panel_vol, 51.25, ADC1_CHANNEL_3);
     Sensor_ctor(&dc_vol, 12.6, ADC1_CHANNEL_0);
-    Sensor_ctor(&battery_vol, 12.6, ADC2_CHANNEL_4); //ADC2_CHANNEL_9
+    Sensor_ctor(&battery_vol, 12.6, ADC2_CHANNEL_9); //
 
     //Voltage Current/Current Resistors input
     Sensor_ctor(&solar_panel_curr, 0.0865, ADC2_CHANNEL_5);
@@ -66,48 +75,70 @@ void switch_control(Switch_control * const me, gpio_num_t dc_pin, gpio_num_t sol
         me -> battery_curr_num = sensor_current(&battery_curr, 0.0173);
         //if battery is greater than 12.6V
         printf("Battery Voltage: %f\n",me -> battery_vol_num);
-        if((me -> battery_vol_num) >= 11.80){
+        if((me -> battery_vol_num) >= 12.00){
             //Solar panel switch is closed, battery switch is opened.
             gpio_set_level(dc_pin, 0);
             printf("Status: Battery is charged, switch opened from battery.\n Load is supplied.\n");
         } 
-        else{
-            //if solar power battery is greater than battery voltage 
-            if((me -> sp_vol_num)> (me -> battery_vol_num)){
+       
+        double battery = me -> battery_vol_num;
+        double sp = me -> sp_vol_num;
+        if(sp >= 20){
+            gpio_set_level(solar_power_pin, 1);
+            double sp_power = (me -> sp_vol_num) * (me -> sp_curr_num);
+            double power_difference = 240-sp_power;
+            if(battery < 12){
+                gpio_set_level(dc_pin, 1);
+            }
+            if((me -> sp_curr_num) > max_current)
+            {
+                max_current = me -> sp_curr_num;
+            }
+            else if((me -> sp_curr_num) < max_current)
+            {
+                double delta_current = (me -> sp_curr_num) - previous_curent;
+                if(delta_current > 0){
+                    dac_voltage = dac_voltage - 0.1;
 
-                int sp_power = (me -> sp_vol_num) * (me -> sp_curr_num);
-                
-                if(sp_power >= previous_power){
-                    //The converter out voltage value will need to be changed to
-                    //increase the dc voltage
-                    converter_out(&dc_vol, 12.5);
-                    previous_power = sp_power;
-                    printf("Status: power at %d \n", sp_power);
+                }
+                else if(delta_current < 0){
+                    dac_voltage = dac_voltage + 0.1;
                 }
                 else{
-                    //The converter out value will need to keep the current voltage 
-                    converter_out(&dc_vol, 0.0);
-                    printf("Status: power at %d \n", sp_power);
+                    dac_voltage = dac_voltage;
                 }
+       
             }
-            else{
-                //Solar panel switch is opened, 
-                //the load will be supplied by the battery
-                gpio_set_level(solar_power_pin, 0);
+            if(dac_voltage > 1.2){
+                dac_voltage = 1.2;
             }
-            if((me -> battery_vol_num) < 10.5){
-                gpio_set_level(dc_pin, 0);
-                printf("Status: Battery is low, there is not enough power to supply load.\n System has been disabled\n");
-            }
-            
+            else if (dac_voltage < 0){
+                dac_voltage = 0;
+            } 
+
+            printf("Voltage value: %f\n", me->sp_vol_num);
+            printf("Current value: %f\n", me->sp_curr_num);
+            converter_out(&dc_vol, dac_voltage);
+            previous_power = sp_power;
+            previous_curent = me ->sp_curr_num;
         }
-        if(count == 60){
-            post_function(me -> sp_vol_num, me -> sp_curr_num, me ->battery_vol_num);
+        else{
+            //Solar panel switch is opened, 
+            //the load will be supplied by the battery
+            gpio_set_level(solar_power_pin, 0);
+        }
+        if((me -> battery_vol_num) < 10.5 && (me ->sp_vol_num) < 30){
+            gpio_set_level(dc_pin, 0);
+            printf("Status: Battery is low, there is not enough power to supply load.\n System has been disabled\n");
+        }
+            
+        
+        if(count == 15){
+            post_function(me -> sp_vol_num, me -> sp_curr_num, me ->battery_vol_num, me->battery_curr_num);
             count = 0;
         }
         else{
-            count = count +1; 
-            printf("Count: %d\n", count);
+            count = count +1;
         }
     }
     
