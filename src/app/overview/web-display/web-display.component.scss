@@ -1,0 +1,53 @@
+// used for the sub header
+.sub_header {
+    height: 40px;
+    background-color: ghostwhite;
+}
+
+// used for all header fonts 
+.headerFont {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+// used for all text fonts 
+.txtFont {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// used to make everything that displays the data closer together 
+.close {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+// used for the chart graph
+.graph {
+    border: 1px solid black;
+    height: 400px;
+}
+
+// used for the chart graph
+.chart-container {
+    height: 20em;
+    width: 100%;
+}
+
+// used for the chart graph
+.container {
+    height: 10em;
+    width: 100%;
+}
+
+// used for the chart graph
+.contain {
+    height: 200px;
+    border: 1px solid pink;
+    min-width: 1100px;
+    width: 100%;
+}

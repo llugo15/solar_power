@@ -1,0 +1,259 @@
+<!-- This is for the charging mode, graph, and the data from the graph to be displayed for the user -->
+  <ion-row>
+    <!-- used to display if battery is charging or discharging -->
+    <ion-col style="text-align: center;">
+      <div>
+        <!-- Displaying if Batter is Charging or Discharging -->
+        <div style="display: block;">
+          <ion-label 
+            position="stacked"
+            class="txtFont">{{ 'Mode' }}</ion-label>
+        </div>
+        <div style="display: block;">
+          <ion-badge 
+            *ngIf="!charging" 
+            class="txtFont"
+            color="success" 
+            size="large">{{ 'Charging' }}</ion-badge>
+          <ion-badge 
+            *ngIf="charging"
+            class="txtFont" 
+            color="danger" 
+            size="large">{{ 'Discharging' }}</ion-badge>
+        </div>
+      </div>
+    </ion-col>
+    <!-- Used to display the battery level -->
+    <ion-col style="text-align: center;">
+      <ion-label 
+              position="stacked"
+              class="txtFont">
+                <ion-icon 
+                  *ngIf="charging"
+                  name="flash-outline" 
+                  style="color: green"></ion-icon>
+                <ion-icon 
+                  *ngIf="!charging"
+                  style="color: orange;"
+                  name="flash-outline"></ion-icon>
+                  {{ 'Battery : ' + progress + 'V'}}</ion-label>
+      <ion-progress-bar 
+        style="height:20px;" 
+        [buffer]="buffer" 
+        [value]="progressDisplay" 
+        color="warning" 
+        size="large"></ion-progress-bar>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <!-- this is where the other information should live -->
+    <ion-col style="justify-content: center;">
+      <!-- power from solar panel -->
+      <ion-row style="justify-content: right;">
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="flash-outline" 
+              style="color: lightskyblue;"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: lightskyblue; font-size: small;">{{ powerProduced + ' W' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Produced' }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+      <!-- discharged from battery -->
+      <ion-row style="justify-content: right;">
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="battery-dead-outline" 
+              style="color: rgb(61, 188, 61);"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(61, 188, 61); font-size: small;">{{ batteryDischargeVol + ' V' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Discharged' }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+      <!-- current voltage -->
+      <ion-row style="justify-content: right;"> 
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="stats-chart-outline" 
+              style="color: rgb(146, 144, 144)"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: small;">{{ voltageData + ' V' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Active Voltage' }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+    </ion-col>
+    <!-- used to display the arrows in the middle of the page -->
+    <ion-col>
+      <ion-row 
+        style="justify-content: center; padding-top: 1.5em; padding-bottom: 1.5em;">
+        <div>
+          <ion-icon 
+              name="arrow-forward-outline" 
+              style="color:lightblue"></ion-icon>
+        </div>
+      </ion-row>
+      <ion-row 
+        style="justify-content: center; padding-top: 1.5em; padding-bottom: 1.5em;">
+        <div>
+          <ion-icon 
+              name="arrow-forward-outline" 
+              style="color:rgb(61, 188, 61)"></ion-icon>
+        </div>
+      </ion-row>
+      <ion-row 
+        style="justify-content: center; padding-top: 1.5em; padding-bottom: 1.5em;"> 
+        <div>
+          <ion-icon 
+              name="arrow-forward-outline" 
+              style="color:rgb(146, 144, 144)"></ion-icon>
+        </div>
+      </ion-row>
+    </ion-col>
+    <ion-col style="justify-content: center;">
+      <!-- power from battery -->
+      <ion-row style="justify-content: left;"> 
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="download-outline" 
+              style="color: orange"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: orange; font-size: small;">{{ batteryDischarge + ' W' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Net Imported' }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+      <!-- charged from battery -->
+      <ion-row style="justify-content: left;"> 
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="battery-full-outline" 
+              style="color: rgb(61, 188, 61);"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(61, 188, 61); font-size: small;">{{ batteryChargeVol + ' V' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Charged' }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-row>
+      <!-- current current -->
+      <ion-row style="justify-content: left;"> 
+        <div>
+          <div style="display: inline-block; margin-right: .1em;">
+            <ion-icon 
+              name="pulse-outline" 
+              style="color: rgb(146, 144, 144)"></ion-icon>
+          </div>
+          <div style="display: inline-block;">
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: small;">{{ currentData + ' A' }}</p>
+            </div>
+            <div>
+              <p 
+                class="close txtFont" 
+                style="color: rgb(146, 144, 144); font-size: xx-small;">{{ 'Active Current' }}</p>
+            </div>
+          </div>
+        </div> 
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <!-- getting the day data -->
+    <ion-col>
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-row style="justify-content: center;">
+            <div>
+              <ion-title
+              class="txtFont"
+              style="font-size: small; justify-content: center;">
+              < <ion-icon name="calendar-clear-outline"></ion-icon>{{date}} ></ion-title>
+            </div>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <!-- used to hold and display the power graph -->
+            <ion-row>
+              <div class="chart-container">
+                <canvas 
+                style="height: 200px; width: 200px;"
+                #powerGraph></canvas>
+              </div>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <div style="display: inline-block;">
+                  <ion-button 
+                    color="secondary"
+                    (click)="displayDay()"
+                    class="txtFont">{{ 'Day' }}</ion-button>
+                </div>
+                <div style="display: inline-block;">
+                  <ion-button 
+                    color="secondary"
+                    (click)="displayWeek()"
+                    class="txtFont">{{ 'Week' }}</ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+

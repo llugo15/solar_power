@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "828440307220",
+    "firebase_url": "https://test-1ecd1-default-rtdb.firebaseio.com",
+    "project_id": "test-1ecd1",
+    "storage_bucket": "test-1ecd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828440307220:android:824f49a538832bb273a901",
+        "android_client_info": {
+          "package_name": "com.MySolarCharge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828440307220-ngvlpsrj798gbml9r6v3rusr2us1k9n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWNPZ93LIPdr12eY5ZbfoDWgYSEdfVL08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828440307220-ngvlpsrj798gbml9r6v3rusr2us1k9n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MySolarCharge</string>
+    <string name="title_activity_main">MySolarCharge</string>
+    <string name="package_name">com.MySolarCharge</string>
+    <string name="custom_url_scheme">com.MySolarCharge</string>
+</resources>

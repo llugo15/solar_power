@@ -1,0 +1,48 @@
+
+// styling for the charge 
+.charge {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+// hold the graph
+.graph {
+    border: 1px solid black;
+    height: 300px;
+    
+}
+
+// holds the graph data
+.spread ion-row {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+// used for header type fonts
+.headerFont {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+// used for text type fonts
+.txtFont {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// holds the power graph
+.chart-container {
+    height: 20em;
+    width: 100%;
+}
+
+// holds the power graph
+.img-container {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+

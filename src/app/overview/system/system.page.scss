@@ -1,0 +1,39 @@
+// max is that number or less
+// min is that number or more 
+
+// styling and ability to change screen size width
+@media screen and (min-width: 0px ) and (max-width: 500px) {
+
+    // used for larger screens
+    .d-sm {
+        display: none;
+    }
+    
+    }
+    
+    @media screen and (min-width: 501px) {
+    // used for smaller screens
+    .d-md {
+            display: none;
+    }
+        
+        }
+    // used to hold the weather graph
+    .graph {
+        border: 1px solid black;
+        height: 300px;
+        
+    }
+
+    // setting the header type fonts
+    .headerFont {
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    
+    // setting the text type fonts
+    .txtFont {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    
+        

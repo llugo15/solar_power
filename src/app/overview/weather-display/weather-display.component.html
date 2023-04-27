@@ -1,0 +1,192 @@
+<ion-card color="light">
+  <ion-card-header>
+    <!-- holds the photo displayed  -->
+    <div 
+    style="margin: 0em;"
+    class="containter">
+      <ion-img 
+        class="img-container"
+        src="../../../assets/cold.jpg" 
+        *ngIf="!isHot;" 
+        ></ion-img>
+      <ion-img 
+        class="img-container"
+        src="../../../assets/hot-weather-25574291.jpg" 
+        *ngIf="isHot" 
+        ></ion-img>
+        <!-- writes the city name over the photo that is displayed -->
+      <div class="centered">
+        <div 
+          style="color:white;"
+          class="location">
+          {{ cityName }}
+        </div>
+        <!-- writes the current temp and location over the current photo displayed -->
+        <div 
+          class="temperature" 
+          style="color: white;">
+          <div 
+            style="display: inline-block; 
+            margin: 0em;">{{ currentTemp | number: '1.0-0'}}</div>
+          <div 
+            style="display: inline-block; 
+            margin: 0em;">{{'°F'}}</div>
+        </div>
+        <div 
+          style="color:white;"
+          class="location">
+          {{ description }}
+        </div>
+      </div>
+    </div>
+  </ion-card-header>
+  <!-- content of the card -->
+  <ion-card-content style="justify-content: center;">
+    <div 
+      style="background-color:rgb(255, 255, 255); margin: .8em .8em .8em .8em; border-radius: 5px;">
+      <ion-row>
+        <ion-col>
+          <!-- used for the max temperature for that day -->
+          <ion-row>
+            <ion-col>
+              <ion-row style="justify-content: end; margin-top: 1em;">
+                <div>
+                  <ion-icon 
+                    name="flame-outline" 
+                    style="color: red;"></ion-icon>
+                </div>
+                <div class="txtFont">
+                  {{ "Max :" }}
+                </div>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-row style="justify-content: start;">
+                <div>
+                  <p
+                    style="margin-top: 1em;" 
+                    class="txtFont">
+                    {{ maxTemp + ' °F'}}
+                  </p>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <!-- used for the wind for that day -->
+            <ion-col>
+              <ion-row style="justify-content: end; margin-top: 1em;">
+                <div style="margin-right: .5em;">
+                  <ion-icon 
+                    name="leaf-outline" 
+                    style="color: lightblue"></ion-icon>
+                </div>
+                <div class="txtFont">
+                  {{ "Wind :" }}
+                </div>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-row style="justify-content: start;">
+                <div>
+                  <p
+                    style="margin-top: 1em;" 
+                    class="txtFont">
+                  {{ wind + ' mph' }}
+                  </p>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <!-- used for the min temp for that current day -->
+            <ion-col>
+              <ion-row style="justify-content: end; margin-top: 1em;">
+                <div>
+                  <ion-icon 
+                    name="snow-outline" 
+                    style="color: blue;"></ion-icon>
+                </div>
+                <div class="txtFont">
+                  {{ "Min :" }}
+                </div>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-row style="justify-content: start;">
+                <div>
+                  <p
+                    style="margin-top: 1em;" 
+                    class="txtFont">
+                    {{ minTemp + ' °F'}}
+                  </p>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <!-- used for the cloud coverage for current day -->
+            <ion-col>
+              <ion-row style="justify-content: end; margin-top: 1em;">
+                <div>
+                  <ion-icon 
+                    name="thermometer-outline" 
+                    style="color: orange"></ion-icon>
+                </div>
+                <div class="txtFont">
+                  {{ "Cloud :" }}
+                </div>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-row style="justify-content: start;">
+                <div>
+                  <p
+                    style="margin-top: 1em;" 
+                    class="txtFont">
+                    {{ clouds }}
+                  </p>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row>
+      <!-- allows the user to change the city location -->
+      <ion-col>
+        <ion-row 
+          style="justify-content: center; border-bottom: 1px solid black; margin-left: 1em; margin-right: 1em;">
+          <p class="txtFont"> {{ 'Change Locations' }} </p>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row style="justify-content: center;">
+          <div>
+            <a 
+            (mouseout)="writeName()"
+            style="color: black;">
+            <ion-input  
+              pattern="text"
+              style="text-align: center;"
+              fill="outline" 
+              [(ngModel)]="cityName"
+              placeholder="City Name"></ion-input>
+              </a>
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
