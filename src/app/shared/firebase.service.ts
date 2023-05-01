@@ -60,17 +60,14 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(1)User: ', this.user);
+        console.log('(TEST1) - User: ', this.user);
       }
     );
     let userEmail = this.user.email.split(".")[0];
 
-        console.log('(1)User!!!: ', this.user);
-
-
     const databaseRef = ref(this.database, 'preferences/' + userEmail + '/systemName');
     onValue(databaseRef, (snapshot) => {
-      console.log("current system: ", snapshot.val());
+      console.log("(TEST2) - Current System: ", snapshot.val());
       this.appName.next(snapshot.val());
     });
   }
@@ -80,14 +77,13 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(2)User: ', this.user);
-
       }
     );
     let userEmail = this.user.email.split(".")[0];
 
     const databaseRef = ref(this.database, 'preferences/' + userEmail + '/cityName');
     onValue(databaseRef, (snapshot) => {
+      console.log("(TEST3) - City Name: ", snapshot.val());
       this.cityName.next(snapshot.val());
     });
   }
@@ -97,7 +93,6 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(3)User: ', this.user);
 
       }
     );
@@ -115,8 +110,6 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(4)User: ', this.user);
-
       }
     );
     let userEmail = this.user.email.split(".")[0];
@@ -132,15 +125,13 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(5)User: ', this.user);
-
       }
     );
     let userEmail = this.user.email.split(".")[0];
     const databaseRef = ref(this.database, userEmail + '/Battery');
     onValue(databaseRef,
       (batLvl) => {
-        // console.log("(TEST3) Fetched BatteryLevel: ", batLvl.val().bat_vol);
+        console.log("(TEST4) - Fetched BatteryLevel: ", batLvl.val().bat_vol);
         this.batteryLevel.next(batLvl.val());
       }
     );
@@ -151,8 +142,6 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(6)User: ', this.user);
-
       }
     );
     let userEmail = this.user.email.split(".")[0];
@@ -181,8 +170,6 @@ export class FirebaseService {
     this.auth.user.subscribe(
       (User) => {
         this.user = User;
-        console.log('(7)User: ', this.user);
-
       }
     );
     // set the current user's email without .com
@@ -197,7 +184,7 @@ export class FirebaseService {
         let time = currDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', });
         this.timeData.push(time);
         // console.log("Time data: ", this.timeData);
-        // console.log("Databack: ", snapshot.val());
+        console.log("(TEST6) - Solar Panel / Battery Data: ", snapshot.val());
   
         // re-setting these variables so that they dont double write
         this.powerProduced = 0;
@@ -223,17 +210,6 @@ export class FirebaseService {
           this.currentbatteryVoltage.push(+((+snapshot.val()[data].batteryVoltage).toFixed(2)));
           // this is going to be used to reset the data but has not been implemented
           if (this.currentbatteryVoltage.length > 1) { }
-          
-          // console.log("(TEST3) Fetched SolarPanelData: ", 
-          //               ' Solar Voltage: ',
-          //               snapshot.val()[data].voltage,
-          //               ' Solar Current: ',
-          //               snapshot.val()[data].current,
-          //               ' Battery Voltage: ',
-          //               snapshot.val()[data].batteryVoltage,
-          //               ' Battery Current: ', 
-          //               snapshot.val()[data].batteryCurrent);
-        // console.log("(TEST1) Voltage Data: ", this.voltageData, ' Current Data: ', this.currentData, ' SolarPower: ', this.solarPowerData);
         
         // iterating through power data to set discharging or charging values / status 
       }
@@ -248,11 +224,16 @@ export class FirebaseService {
           this.isCharging.next(true);
         }
       }
+      console.log("(TEST7) - Total Discharge Power: ", +(this.totalDischarge.toFixed(2)));
+      console.log("(TEST8) - Total Discharge Voltage: ", +this.totalDisChargeVol.toFixed(2));
+      console.log("(TEST9) - Total Charge Voltage: ", +this.totalChargeVol.toFixed(2));
+      console.log("(TEST10) - Battery Power Array: ", this.currentbatteryPower.slice());
+      console.log("(TEST11) - Time Data Array: ", this.timeData.slice());
+      console.log("(TEST12) - Solar Power Data Array: ", this.solarPowerData.slice());
 
         // emitting all of the arrays that have been populated by the for loop above with two demical places
         this.totalBatteryDischarge.next(+(this.totalDischarge.toFixed(2)));
         this.totalBatteryDischargeVol.next(+this.totalDisChargeVol.toFixed(2));
-        // console.log(this.totalDischarge);
         this.totalBatteryChargeVol.next(+this.totalChargeVol.toFixed(2));
         this.powerDatachanged.next(this.currentbatteryPower.slice());
         this.timeDataChange.next(this.timeData.slice());
